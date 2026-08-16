@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lớp học HTML</h1>
+    </header>
+
+    <nav>
+        <h2>Mục lục</h2>
+        <ul>
+            <li><a href="#Giới thiệu">1. Giới thiệu</a></li>
+            <li><a href="#Kĩ năng">2. Kỹ năng được học</a></li>
+            <li><a href="#Bảng giá">3. Bảng giá</a></li>
+            <li><a href="#Đăng kí ngay">4. Đăng kí ngay</a></li>
+        </ul>
+    </nav>
+    <hr>
+
+    <main>
+        <section id="Giới thiệu">
+            <h2>Giới thiệu chung</h2>
+            <p>Chào mừng bạn đến với lớp học HTML.</p>
+            <img src="https://tinhocsaoviet.com/wp-content/uploads/2024/06/Loi-Ich-Khi-Tham-Gia-e1719575086393.jpg" alt="1 buổi học trực tiếp cùng các học viên" width="400">
+            <p>Lớp học HTML cung cấp kiến thức cơ bản về cấu trúc và định dạng trang web, cam kết đầu ra giúp bạn có đầy đủ kỹ năng để xây dựng những trang web đẹp và chức năng.</p>
+        </section>
+
+        <section id="Kĩ năng">
+            <h2>Kỹ năng đạt được sau khóa học</h2>
+            <ul>
+                <li>Hiểu rõ cấu trúc cơ bản của một tài liệu HTML.</li>
+                <li>Biết cách chèn văn bản, hình ảnh và liên kết.</li>
+                <li>Xây dựng được bố cục (layout) cơ bản cho website.</li>
+            </ul>
+        </section>
+        <hr>
+
+        <section id="Bảng giá">
+            <h2>Bảng giá các gói học</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Các gói</th>
+                        <th rowspan="2">Giá</th>
+                        <th colspan="2">Thời lượng</th>
+                    </tr>
+
+                    <tr>
+                        <th>Tuần</th>
+                        <th>Tháng</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Gói cơ bản</td>
+                        <td>1.000.000 VNĐ</td>
+                        <td>4 tuần</td>
+                        <td>1 tháng</td>
+                    </tr>
+                    <tr>
+                        <td>Gói nâng cao</td>
+                        <td>2.000.000 VNĐ</td>
+                        <td>8 tuần</td>
+                        <td>2 tháng</td>
+                    </tr>
+                    <tr>
+                        <td>Gói chuyên nghiệp</td>
+                        <td>4.000.000 VNĐ</td>
+                        <td>12 tuần</td>
+                        <td>3 tháng</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <section id="Đăng kí ngay">
+            <h2>Đăng ký ngay</h2>
+            <form action="/backups" method="post">
+                <label for="name">Họ và tên:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" name="phone" required><br><br>
+                <button type="submit" value="Đăng ký">Đăng ký</button>
+            </form>
+
+        </section>
+    </main>
+    <hr>
+
+    <footer>
+        <p>&copy; 2023 Lớp học HTML. All rights reserved.</p>
+    </footer>
+
+
+</body>
+</html>
