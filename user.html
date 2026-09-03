@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hiển thị dữ liệu Fetch API</title>
+    <style>
+        /* CSS cơ bản để bảng nhìn gọn gàng hơn */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #8788e8;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center" >User management</h1>
+    
+    <!-- Tạo một cái bảng trống có id là user-table -->
+    <table id="user-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ và Tên</th>
+                <th>Email</th>
+                <th>Thành phố</th>
+                <th>Zipcode</th>
+            </tr>
+        </thead>
+        <!-- Phần tbody đang để trống, dữ liệu sẽ được JS chèn vào đây -->
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- Phần viết code JavaScript -->
+    <script src="loaddata_lab2.js" defer> </script>
+    <script src="Asynchronous_lab1.js" defer> </script>
+</body>
+</html>

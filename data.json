@@ -1,0 +1,20 @@
+[
+  {
+    "tenGoi": "Gói cơ bản",
+    "gia": "1.000.000 VNĐ",
+    "thoiLuongTuan": "4 tuần",
+    "thoiLuongThang": "1 tháng"
+  },
+  {
+    "tenGoi": "Gói nâng cao",
+    "gia": "2.000.000 VNĐ",
+    "thoiLuongTuan": "8 tuần",
+    "thoiLuongThang": "2 tháng"
+  },
+  {
+    "tenGoi": "Gói chuyên nghiệp",
+    "gia": "4.000.000 VNĐ",
+    "thoiLuongTuan": "12 tuần",
+    "thoiLuongThang": "3 tháng"
+  }
+]
