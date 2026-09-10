@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán Giá Nhà</title>
+    <style>
+        /* CSS làm đẹp giao diện (UI) */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #2c3e50; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #34495e; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        input:focus, select:focus { border-color: #3498db; outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
+        button { width: 100%; padding: 12px; background-color: #3498db; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background-color: #2980b9; }
+        #result-box { margin-top: 20px; padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; display: none; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Dự đoán giá Bất động sản</h2>
+        
+        <form id="house-form" novalidate>
+            <div class="form-group">
+                <label for="area">Diện tích (m²):</label>
+                <input type="number" id="area" placeholder="Ví dụ: 80" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bedrooms">Số phòng ngủ:</label>
+                <input type="number" id="bedrooms" placeholder="Ví dụ: 3" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Khu vực:</label>
+                <select id="location">
+                    <option value="hanoi">Hà Nội</option>
+                    <option value="hcmc">TP. Hồ Chí Minh</option>
+                    <option value="other">Tỉnh thành khác</option>
+                </select>
+            </div>
+
+            <button type="submit">Dự đoán giá</button>
+        </form>
+
+        <!-- Nơi hiển thị kết quả -->
+        <div id="result-box"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById("house-form");
+        const resultBox = document.getElementById("result-box");
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Chặn tải lại trang
+
+            const area = document.getElementById("area").value;
+            const bedrooms = document.getElementById("bedrooms").value;
+            const location = document.getElementById("location").value;
+
+            if (area === "" || bedrooms === "") {
+                resultBox.className = "error";
+                resultBox.textContent  = "Vui lòng điền đầy đủ thông tin";
+                resultBox.style.display = "block";
+                return;
+            }
+            try {
+                const relativeUrl = `/predict?area=${area}&bedrooms=${bedrooms}&location=${location}`;
+                const response = await fetch(relativeUrl);
+                if (!response.ok) {
+                    throw new Error("Lỗi khi gọi API");
+                }
+                const data = await response.json();
+                const price = data.predicted_price;
+
+                const formattedPrice = price.toLocaleString('vi-VN');
+
+                resultBox.className = "success";
+                resultBox.textContent = `Giá dự đoán: ${formattedPrice} VND`;
+                resultBox.style.display = "block";
+            }
+            catch (error) {
+                resultBox.className = "error";
+                resultBox.textContent = "Đã xảy ra lỗi khi dự đoán giá. Vui lòng thử lại.";
+                resultBox.style.display = "block";
+            }
+            
+
+        });
+    </script>
+</body>
+</html>
