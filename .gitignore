@@ -1,0 +1,12 @@
+# Python & Virtual Environment
+.venv/
+backend/.venv/
+__pycache__/
+*/__pycache__/
+
+# Postman workspace/config
+.postman/
+postman/
+
+# Các file rác hệ thống khác
+.DS_Store

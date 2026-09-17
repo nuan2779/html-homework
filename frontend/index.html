@@ -99,7 +99,25 @@
     <footer>
         <p>&copy; 2023 Lớp học HTML. All rights reserved.</p>
     </footer>
-    <script src="app.js" defer></script>
-    <script src="lab3.js" defer></script>
+    <script >
+        fetch('/items')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('#pricing-table-tbody');
+                tbody.innerHTML = '';
+
+                data.forEach(item => {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${item.price} VND</td>
+                        <td>3 buổi</td>
+                        <td>12 buổi</td> 
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error', error));
+    </script>
 </body>
 </html>

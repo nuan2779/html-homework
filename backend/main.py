@@ -1,32 +1,65 @@
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, HTTPException, Query
+from pydantic import BaseModel
 
 app = FastAPI()
+
+#LAB 1 & 2
+items_db = []
+next_id = 1
+
+class ItemCreate(BaseModel):
+    name: str
+    price: float
+
+class ItemPublic(BaseModel):
+    id: int
+    name: str
+    price: float
+
+@app.post("/items", response_model=ItemPublic, status_code=201)
+def create_item(data: ItemCreate):
+    global next_id
+    item = ItemPublic(id=next_id,name= data.name, price= data.price)
+    items_db.append(item)
+    next_id += 1
+    return item
+
+@app.get("/items", response_model=list[ItemPublic])
+def list_items(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100)
+):
+    return items_db[skip:skip + limit]
+
+def find_item(item_id:int):
+    for item in items_db:
+        if item.id == item_id:
+            return item
+    return None
+@app.get("/items/{item_id}", response_model=ItemPublic)
+def get_item(item_id: int):
+    item = find_item(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return item
+
+@app.put("/items/{item_id}", response_model=ItemPublic)
+def update_item(item_id: int, data: ItemCreate):
+    item = find_item(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    item.name = data.name
+    item.price = data.price
+    return item
+
+@app.delete("/items/{item_id}", status_code=204)
+def delete_item(item_id: int):
+    item = find_item(item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    items_db.remove(item)
+    return None
+
+#LAB 3
+from fastapi.staticfiles import StaticFiles
 app.mount("/static", StaticFiles(directory="../frontend"), name="static")
-
-def predict_price(area: float, bedrooms: int, location: str) -> float:
-    base_price = 500_000_000 # Base price in vnd
-    price_per_sq_meter = 15_000_000
-    price_per_bedroom = 50_000_000
-    total_price = base_price + (area * price_per_sq_meter) + (bedrooms * price_per_bedroom)
-
-    location = location.lower()
-    if location == "hanoi":
-        total_price *= 1.3
-    if location == "hcmc":
-        total_price *= 1.25
-    final_price = round(total_price, -6)
-    return float(final_price)
-
-@app.get("/predict")
-def get_prediction(area: float, bedrooms: int, location: str = "other"):
-#Dùng def là bởi vì việc dự đoán giá là một hành động đồng bộ, không có độ trễ như việc truy vấn database hay gọi API bên ngoài, 
-#tối ưu thời gian chạy trên cpu
-    price = predict_price(area, bedrooms, location)
-    return {"area": area,
-            "bedrooms": bedrooms,
-            "location": location,
-            "predicted_price": price}
-
-#Nếu không có location lúc điền form thì vẫn chạy được thì trong hàm để là location: str = "other" , việc này giúp fastapi hiểu rằng nếu không có location thì mặc định là "other" và vẫn chạy được, tránh lỗi khi người dùng không nhập location
-#Nếu không có area thì sẽ báo lỗi vì area là bắt buộc, nếu muốn area không bắt buộc thì có thể để là area: float = 0.0, nếu để bình thường thì area không có giá trịnh mặc định nên fastapi sẽ báo lỗi khi không có area, nếu muốn area không bắt buộc thì có thể để là area: float = 0.0, nếu để bình thường thì area không có giá trị mặc định nên fastapi sẽ báo lỗi khi không có area
